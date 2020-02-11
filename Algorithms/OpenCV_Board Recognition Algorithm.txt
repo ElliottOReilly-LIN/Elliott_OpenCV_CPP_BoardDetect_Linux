@@ -1,0 +1,29 @@
+Board Recognition Algorithm[2]
+
+Board initialization At the start of the program the GUI prompts the
+user to clear the board so that it may initialize the board. This
+process took a picture of the empty board and performed an analysis of
+the image in which it could properly map the chessboard. In doing so,
+the photo was first turned into a grayscale copy of itself. Using the
+OpenCV library's built in algorithm Adaptive Thresholding[3], pixels
+above a threshold rgb color value were turned white and those below
+turned black. This binarization of the image allowed for contours
+(shapes) within the image to be more easily found. The largest of
+these contours found was the edge of the chessboard. Given the edge of
+the chessboard, a black copy of the image was created and the original
+image within the edge of the chessboard was written onto the black
+image. This effectively created a new image with the chessboard
+surround by black. This is important because it excludes any noise
+that may interfere with the following OpenCV algorithms. Next, using
+the OpenCV Canny Edge Detection[4] , the edges of the chessboard
+squares were inferred from the sharpest gradient of the color values
+in the image. Given these edges, the Hough Line Transform[5] was able
+to infer the lines in the image, mapping a grid onto the image. The
+corners of the squares were determined by the intersection of the
+vertical and horizontal lines. After removing duplicates and sorting
+the corners by both row and column, the squares were created. Using
+these squares, the program was able to initialize a board that would
+hold much of the information about the game. before explaining the
+piece movement detection algorithm, it is best to describe the objects
+used by the program and the information that they stored. For more
+instruction on Open CV, visit our tutorial:Open CV
