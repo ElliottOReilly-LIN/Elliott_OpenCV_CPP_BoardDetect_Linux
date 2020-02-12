@@ -1,25 +1,56 @@
 Elliott O'Reilly 17666843
 
 Chess Board Detection Algorithm - Draft 1
----------------------------------------------------------
-I will first create up flawless bitmap test image of a chess board without a physical boarder, just the black/white s
-quares with a contrasting green background(this is an arbitrary colour).
+------------------------------------------------------
 
-The first objective will be to scan the image (top left - to bottom right) and detect 
-pixel grouping concentration of either 0 or 255, namely black or white.
-A simple nested loop will be used for this.
+I will first create up flawless bitmap test image of a chess board
+without a physical boarder, just the black/white squares with a
+contrasting green background(this is an arbitrary colour).
 
-Know parameters - We know the board will be divided into 8 equal blocks in the X and Y coordinate plane, 
-so If I know the image to be 600X600 for instance, I can then infer than any one block of colour 
-will be no greater than 75 pixels (600/8). A simple test within these parameters will determine the
-colour square colour. When we find a 'cell' as it were, we can then use simple maths to find the
-centre of the square and also then infer it's neighbour cell. 
+The first objective will be to scan the image (top left - to bottom
+right) and detect pixel grouping concentration of either 0 or 255,
+namely black or white. A simple nested loop will be used for this.
+
+Know parameters - We know the board will be divided into 8 equal
+blocks in the X and Y coordinate plane, so If I know the image to be
+600X600 for instance, I can then infer than any one block of colour
+will be no greater than 75 pixels (600/8). A simple test within these
+parameters will determine the colour square colour. When we find a
+'cell' as it were, we can then use simple maths to find the centre of
+the square and also then infer it's neighbour cell. 
+
+When each 'cell' has been accounted for, we have options open to us
+for manipulation, I.e. storing in a 2D array. We can also state that
+if a given area within that call has a deviation from it's black/white
+state, then that cell must be occupied, or In our case have a piece in
+it.
+
+Unknowns - For the final detection, we must take into account
+elevation/angle of the camera to the board. We will also have to
+account for noise infiltration from arm movements etc. etc.
+
+Pseudo Code
+-------------------------------------------------------
+Using OpenCV/C++ -- where pixYX is individual pixel
+					and pixYX.coor is pixel coordinate
+
+read in image of chessboard;
+copy image;
+
+loop through Row,
+	Loop through Column,
+		Access pixel data at (y, x);
+		If pixel at y,x == 0,
+			then pixYX is black
+			store pxYX co-or in array.
+		if pixel at y,x == 255,
+			then pixYX is white
+			store pxYX co-or in array.
 
 
+loop through created array,
+	if pixYX.coor > 30 and pixYX.coor < 100 AND pixYX == 0
+		then it belongs to a black 'cell' or square.
+	else if pixYX.coor > 30 and pixYX.coor < 100 AND pixYX == 255
+		then it belongs to a white 'cell' or square.
 
-When each 'cell' has been accounted for, we have options open to us for manipulation, 
-I.e. storing in a 2D array. We can also state that if a given area within that call 
-has a deviation from it's black/white state, then that cell must be occupied, or In our case have a piece in it.
-
-Unknowns - For the final detection, we must take into account elevation/angle of the camera to the board. 
-We will also have to account for noise infiltration from arm movements etc. etc.
