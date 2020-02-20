@@ -35,31 +35,42 @@ int main()
 	Mat drawing = Mat::zeros(gray.size(), CV_8UC3);
 
 	imwrite("contOut.png", gray);
-
-	int chessBoard[8][8]; // Set up a 2D array to hold the contour points found
+	
+	Point offSet; // Create a new point to hold the offset of the centre of the 'cell'
+	
 
 	// This loop gives me access to the points stored on the contour
 	for (size_t X = 0; X < contours.size(); ++X)
 		for (size_t Y = 0; Y < contours[X].size(); Y++)
 		{
 			Point currentContourPixel = contours[X][Y]; //Store each point in a new contour point
-			Point centredPixel; // Create a new point to hold the offset of the centre of the 'cell'
-			//cout << "co-ors: x = " << currentContourPixel.x << " y = " << currentContourPixel.y << endl;
+			
+			if (currentContourPixel.x == 0 && currentContourPixel.y == 2) { // We now this will be the top left square contour
+				//cout << "co-ors: x = " << currentContourPixel.x << " y = " << currentContourPixel.y << endl;
 
+				offSet = Point(currentContourPixel.x + 50, currentContourPixel.y + 48);
 
-
-			if (currentContourPixel.x <= 10 && currentContourPixel.y <= 10) { // We now this will be the top left square contour
-				cout << "co-ors: x = " << currentContourPixel.x << " y = " << currentContourPixel.y << endl;
-
-				centredPixel = Point(currentContourPixel.x + 50, currentContourPixel.y + 50);
-				chessBoard[0][0] = (centredPixel.x, centredPixel.y); // Populate my array with the new centered offset coordinate.
-
-				cout << "Centre.X: " << centredPixel.x << "  Centre.Y = " << centredPixel.y <<"\n";
-				cout << "\nArray " << centredPixel;
 				rectangle(cropImage, Point(45, 45), Point(55, 55), Scalar(255, 255, 255), 1, 1, 0); // Simply draws a rectangle at given co-ords 
 				cv::putText(drawing, "A8", cv::Point(30, 50), cv::FONT_HERSHEY_DUPLEX, 0.8, Scalar(102, 255, 102), 2); // Put some text on the image
 			}
 		}
+	
+	Point centredPx;
+	Point centre[8][8];
+
+	for (size_t y = 0; y < 8; y++)	{
+		for (size_t x = 0; x < 8; x++)
+		{
+			centredPx = Point(offSet.x + x*100, offSet.y + y*100);
+			centre[x][y] = centredPx;
+
+			rectangle(cropImage, Point(centredPx.x -5, centredPx.y -5 ), Point(centredPx.x +5, centredPx.y +5), Scalar(255, 255, 255), 1, 1, 0); // Simply draws a rectangle at given co-ords 
+		}
+	}
+	cout << "Test cases ----------\n";
+	cout << "Top row, square (0,7) : " << centre[0][7] << endl;
+	cout << "4th row, square (4,2) : " << centre[4][2] << endl;
+
 		// Displays the contoured lines using the random colour generator
 		for (int i = 0; i < contours.size(); i++)
 		{
@@ -68,7 +79,7 @@ int main()
 			drawContours(drawing, contours, i, color, 2, 8, hierarchy, 0, Point());
 		}
 		
-		imshow("Bounded and Cropped Contoured image", cropImage);
+		imshow("BoundingRect/Contoured_image", cropImage);
 		cout << "\n----Bounded and Cropped Contoured image size-----\n" << rect.size();
 
 		imshow("Result window", drawing);
@@ -76,3 +87,4 @@ int main()
 		waitKey(0);
 		return 0;
 	}
+	
