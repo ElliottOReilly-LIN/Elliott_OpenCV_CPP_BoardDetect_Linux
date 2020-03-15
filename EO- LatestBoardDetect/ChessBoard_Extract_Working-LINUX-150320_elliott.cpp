@@ -1,3 +1,12 @@
+/***************************************************************************************
+*    Title: ChessBoard_Detect_Linux.cpp
+*    Author: Elliott O'Reilly Level 2 Student
+*    Group 10 TSE Project
+*	 Date: 15/03/20
+*    Code version: Final_V1
+*    Availability: https://github.com/TSE-Group10/OpenCV_CPP_BoardDetect/tree/master/EO-%20LatestBoardDetect
+*
+***************************************************************************************/
 #include <opencv2/opencv.hpp> //Include file for every supported OpenCV function
 #include<iostream>
 #include "opencv2/core/core.hpp"
@@ -93,6 +102,7 @@ int main()
 		//Draw the contour and rectangle
 		drawContours(imgOriginal, contours, largest_contour_index, color, CV_FILLED, 8, hierarchy);
 		rectangle(imgOriginal, bounding_rect, Scalar(0, 255, 0), 2, 8, 0);
+		
 		imshow("Largest Contour", cropImg);
 		namedWindow("Display window", CV_WINDOW_AUTOSIZE);
 		imshow("Display window", imgOriginal);
