@@ -2,7 +2,7 @@
 *    Title: ChessBoard_Detect_Linux.cpp
 *    Author: Elliott O'Reilly Level 2 Student
 *    Group 10 TSE Project
-*	 Date: 15/03/20
+*    Date: 15/03/20
 *    Code version: Final_V1
 *    Availability: https://github.com/TSE-Group10/OpenCV_CPP_BoardDetect/tree/master/EO-%20LatestBoardDetect
 *
