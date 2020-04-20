@@ -6,3 +6,5 @@ Note: openCV 3.2 for Linux must be installed, with associative libraries to comp
 
 The program will detect and extract any chessboard from it's background, then segment into a 2D-64 square array
 ready for implementation within a chess engine game. 
+
+I also has a collection of various function attempts and algorithms, designed specifically for chess board recognition.
