@@ -8,3 +8,5 @@ The program will detect and extract any chessboard from it's background, then se
 ready for implementation within a chess engine game. 
 
 It also has a collection of various function attempts and algorithms, designed specifically for chess board recognition.
+
+The final piece of code will detect a static image and now a live camera feed of a chess board.
